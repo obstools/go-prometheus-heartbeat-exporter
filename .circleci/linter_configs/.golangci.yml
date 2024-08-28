@@ -1,0 +1,15 @@
+---
+
+linters:
+  enable:
+    - gocyclo
+    - misspell
+    - revive
+
+linters-settings:
+  gocyclo:
+    min-complexity: 15
+
+  govet:
+    disable:
+      - copylocks

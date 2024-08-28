@@ -1,4 +1,4 @@
-# ![Lightweight configurable multithreaded Prometheus Heartbeat Exporter written on Golang](https://repository-images.githubusercontent.com/42/42)
+# ![Prometheus Heartbeat Exporter - lightweight configurable multithreaded smokeping written on Golang](https://repository-images.githubusercontent.com/42/42)
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/bestwebua/go-prometheus-heartbeat-exporter)](https://goreportcard.com/report/github.com/bestwebua/go-prometheus-heartbeat-exporter)
 [![Codecov](https://codecov.io/gh/bestwebua/go-prometheus-heartbeat-exporter/branch/master/graph/badge.svg)](https://codecov.io/gh/bestwebua/go-prometheus-heartbeat-exporter)
@@ -16,10 +16,9 @@
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
-  - [Inside of any ecosystem](#inside-of-any-ecosystem)
-    - [Configuring with command line arguments](#configuring-with-command-line-arguments)
-    - [Other options](#other-options)
-    - [Stopping server](#stopping-server)
+  - [Configuring with command line arguments](#configuring-with-command-line-arguments)
+  - [Other options](#other-options)
+  - [Stopping server](#stopping-server)
 - [Contributing](#contributing)
 - [License](#license)
 - [Code of Conduct](#code-of-conduct)
@@ -29,7 +28,7 @@
 
 ## Features
 
-- Configurable multithreaded Prometheus Heartbeat Exporter
+- Configurable multithreaded Prometheus Heartbeat Exporter...
 
 ## Requirements
 
@@ -54,14 +53,11 @@ import heartbeat "github.com/bestwebua/go-prometheus-heartbeat-exporter"
 
 ## Usage
 
-- [Inside of any ecosystem](#inside-of-any-ecosystem)
-  - [Configuring with command line arguments](#configuring-with-command-line-arguments)
-  - [Other options](#other-options)
-  - [Stopping server](#stopping-server)
+- [Configuring with command line arguments](#configuring-with-command-line-arguments)
+- [Other options](#other-options)
+- [Stopping server](#stopping-server)
 
-#### Configuring
-
-### Inside of any ecosystem
+### Configuring
 
 You can use `heartbeat` as binary. Just download the pre-compiled binary from the [releases page](https://github.com/bestwebua/go-prometheus-heartbeat-exporter/releases) and copy them to the desired location. For start server run command with needed arguments. You can use our bash script for automation this process like in the example below:
 
@@ -76,7 +72,7 @@ curl -sL https://raw.githubusercontent.com/bestwebua/go-prometheus-heartbeat-exp
 
 | Flag description | Example of usage |
 | --- | --- |
-| `-port` - server port number. If not specified it will be assigned dynamically | `-port=2525` |
+| `-port` - server port number. If not specified it will be assigned dynamically | `-port=8080` |
 
 #### Other options
 
