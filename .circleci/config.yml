@@ -1,0 +1,117 @@
+---
+
+version: 2.1
+
+defaults: &defaults
+  working_directory: ~/go-prometheus-heartbeat-exporter
+  docker:
+    - image: cimg/go:1.22.6 # TODO: update to cimg/go:1.23.0
+
+jobs:
+  linters:
+    docker:
+      - image: golangci/golangci-lint:v1.56.2-alpine
+
+    steps:
+      - checkout
+
+      - run:
+          name: Installing linters
+          command: |
+                apk add --update npm shellcheck yamllint
+                npm install --global --save-dev git+https://github.com/streetsidesoftware/cspell-cli markdownlint-cli lefthook
+                cp .circleci/linter_configs/.lefthook.yml lefthook.yml
+
+      - run:
+          name: Running linters
+          command: lefthook run linters
+
+  tests:
+    <<: *defaults
+
+    steps:
+      - checkout
+
+      - run:
+          name: Installing Gotestsum
+          command: go get gotest.tools/gotestsum
+
+      - run:
+          name: Running tests
+          command: gotestsum --format standard-verbose -- -coverprofile=coverage_report ./...
+
+      - run:
+          name: Checking for race conditions
+          command: go test -race ./...
+
+      - run:
+          name: Creating coverage reports
+          command: |
+            mkdir -p /tmp/artifacts
+            go tool cover -html=coverage_report -o coverage.html
+            go tool cover -func=coverage_report -o coverage.txt
+            mv coverage.html coverage.txt /tmp/artifacts
+
+      - store_artifacts:
+          name: Saving coverage artifacts
+          path: /tmp/artifacts
+
+      - run:
+          name: Enforcing minimum code coverage
+          command: |
+            tail -1 /tmp/artifacts/coverage.txt | awk '{ exit (($NF == "100.0%") ? 0 : 1) }'
+
+      - deploy:
+          name: Uploading Codecov test coverage report
+          command: |
+            bash <(curl -s https://codecov.io/bash) -f coverage_report
+
+  tag:
+    <<: *defaults
+
+    steps:
+      - checkout
+
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:DCNEGonZTULWCTjsSp+gNKtnxL6BYJTTNkYzFniAKz4"
+
+      - run:
+          name: Publishing new tag to GitHub
+          command: |
+            ./.circleci/scripts/tag.sh
+
+  release:
+    <<: *defaults
+
+    steps:
+      - checkout
+
+      - run:
+          name: Publishing new release to GitHub
+          command: |
+            curl -sL https://git.io/goreleaser | bash -s -- --config ".circleci/.goreleaser.yml"
+
+      - run:
+          name: Publishing new release to Go Packages
+          command: |
+            ./.circleci/scripts/release.sh bestwebua go-prometheus-heartbeat-exporter
+
+workflows:
+  build:
+    jobs:
+      - linters
+      - tests
+      - tag:
+          requires:
+            - linters
+            - tests
+          filters:
+            branches:
+              only: master
+      - release:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*(-.*)*/
