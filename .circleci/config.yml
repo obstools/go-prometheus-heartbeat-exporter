@@ -5,12 +5,12 @@ version: 2.1
 defaults: &defaults
   working_directory: ~/go-prometheus-heartbeat-exporter
   docker:
-    - image: cimg/go:1.22.6 # TODO: update to cimg/go:1.23.0
+    - image: cimg/go:1.23
 
 jobs:
   linters:
     docker:
-      - image: golangci/golangci-lint:v1.56.2-alpine
+      - image: golangci/golangci-lint:v1.61.0-alpine
 
     steps:
       - checkout
@@ -61,7 +61,7 @@ jobs:
           command: |
             tail -1 /tmp/artifacts/coverage.txt | awk '{ exit (($NF == "100.0%") ? 0 : 1) }'
 
-      - deploy:
+      - run:
           name: Uploading Codecov test coverage report
           command: |
             bash <(curl -s https://codecov.io/bash) -f coverage_report
