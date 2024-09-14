@@ -1,0 +1,12 @@
+---
+
+log_to_stdout: true
+log_activity: true
+port: 8080
+metrics_route: '/metrics${METRICS_ROUTE}'
+instances:
+  - name: 'postgres_1'
+    connection: 'postgres'
+    url: 'postgres://localhost:5432/healthcheck_db'
+    interval: 3
+    timeout: 2
