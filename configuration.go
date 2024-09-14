@@ -1,7 +1,9 @@
 package heartbeat
 
 import (
+	"io"
 	"os"
+	"regexp"
 
 	"gopkg.in/yaml.v3"
 )
@@ -25,6 +27,18 @@ type Configuration struct {
 	InstancesAttributes []*InstanceAttributes `yaml:"instances"`
 }
 
+// Configuration loader helper. Returns new string with founded
+// interpolated ENV vars matched with pattern ${VAR_NAME}
+func interpolateEnvVars(source string) string {
+	regex := regexp.MustCompile(`\$\{(\w+)\}`)
+
+	return regex.ReplaceAllStringFunc(source, func(str string) string {
+		varName := regex.FindStringSubmatch(str)[1]
+
+		return os.Getenv(varName)
+	})
+}
+
 // Configuration loader/builder. Returns configuration pointer and error
 func loadConfiguration(configurationPath string) (configuration *Configuration, err error) {
 	file, err := os.Open(configurationPath)
@@ -33,11 +47,14 @@ func loadConfiguration(configurationPath string) (configuration *Configuration, 
 	}
 	defer file.Close()
 
-	if file != nil {
-		decoder := yaml.NewDecoder(file)
-		if err := decoder.Decode(&configuration); err != nil {
-			return configuration, err
-		}
+	configurationData, err := io.ReadAll(file)
+	if err != nil {
+		return configuration, err
+	}
+
+	err = yaml.Unmarshal([]byte(interpolateEnvVars(string(configurationData))), &configuration)
+	if err != nil {
+		return configuration, err
 	}
 
 	// TODO: add defaults configuration values in the next release
