@@ -6,14 +6,13 @@ import (
 	"os"
 )
 
-// TODO: uncomment when this logger will embedded as interface
-// // Logger interface
-// type logger interface {
-// 	infoActivity(...string)
-// 	info(...string)
-// 	warning(...string)
-// 	error(...string)
-// }
+// Logger interface
+type logger interface {
+	infoActivity(...string)
+	info(...string)
+	warning(...string)
+	error(...string)
+}
 
 // Custom logger that supports 3 different log levels (info, warning, error)
 type eventLogger struct {

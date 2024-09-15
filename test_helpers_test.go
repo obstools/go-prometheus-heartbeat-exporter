@@ -1,6 +1,8 @@
 package heartbeat
 
-import "regexp"
+import (
+	"regexp"
+)
 
 // Regex builder
 func newRegex(regexPattern string) (*regexp.Regexp, error) {
