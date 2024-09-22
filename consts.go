@@ -26,4 +26,7 @@ const (
 	metricDescDuration            = "The heartbeat duration in seconds"
 	metricFailureLableConncection = "connection"
 	metricFailureLableTimeout     = "timeout"
+
+	// Session
+	connectionWithoutSsl = "?sslmode=disable"
 )
