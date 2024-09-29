@@ -1,28 +1,41 @@
 package heartbeat
 
-import "database/sql"
+// Session base heartbeat structure
+type sessionHeartbeat struct {
+	connection string
+	url        string
+}
 
-var connectionPostgres = "postgres"
+// Session type
+type session interface {
+	run() error
+	getConnection() string
+	getURL() string
+}
 
-// // Session type
-// type session func(string) error
+// Session methods
 
-// Place for heartbeats logic implementation
+// Returns session connection name
+func (session *sessionHeartbeat) getConnection() string {
+	return session.connection
+}
 
-// Postgres session
-func sessionPostgres(url string) error {
-	var err error
-	// time.Sleep(time.Duration(10) * time.Second) // Let's simulate that we exceeded expected timeout
-	db, err := sql.Open(connectionPostgres, url+connectionWithoutSsl)
-	if err != nil {
-		return err
+// Returns session url
+func (session *sessionHeartbeat) getURL() string {
+	return session.url
+}
+
+// New session builder. Returns new session interface based on the connection type
+func newSession(connection, url string) session {
+	switch connection {
+	case connectionPostgres:
+		return &sessionPostgres{
+			sessionHeartbeat: &sessionHeartbeat{
+				connection: connection,
+				url:        url,
+			},
+		}
 	}
-	defer db.Close()
 
-	err = db.Ping()
-	if err != nil {
-		return err
-	}
-
-	return err
+	return nil
 }

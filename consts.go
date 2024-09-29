@@ -9,6 +9,15 @@ const (
 	exporterShutdownMessage = "Prometheus exporter is in the shutdown mode and won't accept new connections"
 	exporterStopMessage     = "Prometheus exporter stopped gracefully"
 
+	// Heartbeat
+	heartbeatWorkerMsg                   = "Heartbeat worker:"
+	heartbeatWorkerStatusActive          = "started"
+	heartbeatWorkerStatusInactive        = "stopped"
+	heartbeatActivitySuccess             = "SUCCESS:"
+	heartbeatActivitySuccessElapsedTime  = "elapsed time:"
+	heartbeatActivityFailure             = "FAILURE:"
+	heartbeatActivityFailureSessionError = "heartbeat session error:"
+
 	// Logger
 	infoLogLevel    = "INFO"
 	warningLogLevel = "WARNING"
@@ -28,5 +37,6 @@ const (
 	metricFailureLableTimeout     = "timeout"
 
 	// Session
+	connectionPostgres   = "postgres"
 	connectionWithoutSsl = "?sslmode=disable"
 )
