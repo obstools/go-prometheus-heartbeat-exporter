@@ -21,7 +21,7 @@ func loggerMessageRegex(logLevel, logMessage string) *regexp.Regexp {
 }
 
 // Postgres session
-// Create test database for postgres
+// Creates test database for postgres
 func createPostgresDb() error {
 	db, err := sql.Open("postgres", "host=localhost user=postgres port=5432 sslmode=disable")
 	if err != nil {
@@ -38,7 +38,7 @@ func createPostgresDb() error {
 	return err
 }
 
-// Drop test database for postgres
+// Drops test database for postgres
 func dropPostgresDb() error {
 	db, err := sql.Open("postgres", "host=localhost user=postgres port=5432 sslmode=disable")
 	if err != nil {
@@ -50,7 +50,7 @@ func dropPostgresDb() error {
 	return err
 }
 
-// Compose connection string for postgres
+// Composes connection string for postgres
 func composePostgresConnectionString() string {
 	return "postgres://postgres@localhost:5432/" + testDB
 }
