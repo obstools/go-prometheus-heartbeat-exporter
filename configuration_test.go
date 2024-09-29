@@ -31,7 +31,7 @@ func TestLoadConfiguration(t *testing.T) {
 				{
 					Name:        "postgres_1",
 					Connection:  "postgres",
-					URL:         "postgres://localhost:5432/healthcheck_db",
+					URL:         "postgres://localhost:5432/heartbeat_test",
 					IntervalSec: 3,
 					TimeoutSec:  2,
 				},
@@ -56,7 +56,7 @@ func TestLoadConfiguration(t *testing.T) {
 				{
 					Name:        "postgres_1",
 					Connection:  "postgres",
-					URL:         "postgres://localhost:5432/healthcheck_db",
+					URL:         "postgres://localhost:5432/heartbeat_test",
 					IntervalSec: 3,
 					TimeoutSec:  2,
 				},

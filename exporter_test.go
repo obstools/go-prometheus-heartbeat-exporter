@@ -58,7 +58,7 @@ func TestExporterStop(t *testing.T) {
 	})
 }
 
-func TestListenShutdownSignal(t *testing.T) {
+func TestExporterListenShutdownSignal(t *testing.T) {
 	prometheusServer, logger, wg := new(serverPrometheusMock), new(loggerMock), &sync.WaitGroup{}
 	parentContext, cancel := context.WithCancel(context.Background())
 	exporter := &exporter{
@@ -93,7 +93,7 @@ func TestListenShutdownSignal(t *testing.T) {
 	})
 }
 
-func TestIsPortAvailable(t *testing.T) {
+func TestExporterIsPortAvailable(t *testing.T) {
 	prometheusServer, port := new(serverPrometheusMock), ":8282"
 	t.Run("checks if port is available", func(t *testing.T) {
 		exporter := &exporter{

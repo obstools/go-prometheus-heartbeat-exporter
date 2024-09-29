@@ -7,6 +7,6 @@ metrics_route: '/metrics'
 instances:
   - name: 'postgres_1
     connection: 'postgres'
-    url: 'postgres://localhost:5432/healthcheck_db'
+    url: 'postgres://localhost:5432/heartbeat_test'
     interval: 3
     timeout: 2
