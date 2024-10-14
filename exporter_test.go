@@ -41,6 +41,8 @@ func TestExporterStart(t *testing.T) {
 		assert.NoError(t, exporter.start(parentContext, wg))
 		assert.Equal(t, parentContext, exporter.ctx)
 		assert.Equal(t, wg, exporter.wg)
+		prometheusServer.AssertExpectations(t)
+		logger.AssertExpectations(t)
 	})
 }
 
@@ -55,6 +57,7 @@ func TestExporterStop(t *testing.T) {
 		prometheusServer.On("Shutdown", mock.AnythingOfType("*context.timerCtx")).Once().Return(nil)
 
 		assert.NoError(t, exporter.stop())
+		prometheusServer.AssertExpectations(t)
 	})
 }
 
@@ -78,6 +81,8 @@ func TestExporterListenShutdownSignal(t *testing.T) {
 		wg.Wait() // Wait for goroutine to finish
 
 		assert.Nil(t, exporter.err)
+		prometheusServer.AssertExpectations(t)
+		logger.AssertExpectations(t)
 	})
 
 	t.Run("listens shutdown signal, exporter stops with error", func(t *testing.T) {
@@ -90,6 +95,8 @@ func TestExporterListenShutdownSignal(t *testing.T) {
 		wg.Wait() // Wait for goroutine to finish
 
 		assert.Error(t, exporter.err)
+		prometheusServer.AssertExpectations(t)
+		logger.AssertExpectations(t)
 	})
 }
 
@@ -103,6 +110,7 @@ func TestExporterIsPortAvailable(t *testing.T) {
 		prometheusServer.On("Port").Once().Return(port)
 
 		assert.NoError(t, exporter.isPortAvailable())
+		prometheusServer.AssertExpectations(t)
 	})
 
 	t.Run("checks if port is unavailable", func(t *testing.T) {
@@ -115,5 +123,6 @@ func TestExporterIsPortAvailable(t *testing.T) {
 		defer listener.Close()
 
 		assert.Error(t, exporter.isPortAvailable(), exporterErrorMsg+port)
+		prometheusServer.AssertExpectations(t)
 	})
 }

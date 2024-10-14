@@ -49,6 +49,75 @@ func (mock *serverPrometheusMock) Port() string {
 	return args.String(0)
 }
 
+// session mock
+type sessionMock struct {
+	mock.Mock
+}
+
+func (mock *sessionMock) run() error {
+	args := mock.Called()
+	return args.Error(0)
+}
+
+func (mock *sessionMock) getConnection() string {
+	args := mock.Called()
+	return args.String(0)
+}
+
+func (mock *sessionMock) getURL() string {
+	args := mock.Called()
+	return args.String(0)
+}
+
+// prometheusCounterMock
+type prometheusCounterMock struct {
+	mock.Mock
+}
+
+func (mock *prometheusCounterMock) Inc() {
+	mock.Called()
+}
+
+func (mock *prometheusCounterMock) Add(val float64) {
+	mock.Called(val)
+}
+
+// prometheusCounterVecMock
+type prometheusCounterVecMock struct {
+	mock.Mock
+}
+
+func (mock *prometheusCounterVecMock) WithLabelValues(labels ...string) prometheusCounter {
+	args := mock.Called(labels)
+	return args.Get(0).(prometheusCounter)
+}
+
+// prometheusGaugeMock
+type prometheusGaugeMock struct {
+	mock.Mock
+}
+
+func (mock *prometheusGaugeMock) Set(val float64) {
+	mock.Called(val)
+}
+
+// metricMock
+type metricMock struct {
+	mock.Mock
+}
+
+func (mock *metricMock) setSuccess(duration float64) {
+	mock.Called(duration)
+}
+
+func (mock *metricMock) setFailureConnection() {
+	mock.Called()
+}
+
+func (mock *metricMock) setFailureTimeout() {
+	mock.Called()
+}
+
 // // WaitGroup mock
 // type waitGroupMock struct {
 // 	mock.Mock

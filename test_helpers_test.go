@@ -2,7 +2,10 @@ package heartbeat
 
 import (
 	"database/sql"
+	"fmt"
 	"regexp"
+	"sync"
+	"time"
 
 	"github.com/lib/pq"
 )
@@ -53,4 +56,29 @@ func dropPostgresDb() error {
 // Composes connection string for postgres
 func composePostgresConnectionString() string {
 	return "postgres://postgres@localhost:5432/" + testDB
+}
+
+// Creates new session
+func createNewSession(connection, url string) session {
+	return newSession(connection, url)
+}
+
+// Creates new wait group
+func createNewWaitGroup() *sync.WaitGroup {
+	return new(sync.WaitGroup)
+}
+
+// Generates a unique instance name for testing purposes
+func generateUniqueInstanceName() string {
+	return fmt.Sprintf("test_instance_%d", time.Now().UnixNano())
+}
+
+// New heartbeat instance
+func newTestInstance(session session) *heartbeatInstance {
+	return &heartbeatInstance{
+		name:        generateUniqueInstanceName(),
+		intervalSec: 2,
+		timeoutSec:  3,
+		session:     session,
+	}
 }
