@@ -118,19 +118,19 @@ func (mock *metricMock) setFailureTimeout() {
 	mock.Called()
 }
 
-// // WaitGroup mock
-// type waitGroupMock struct {
-// 	mock.Mock
-// }
+// WaitGroup mock
+type waitGroupMock struct {
+	mock.Mock
+}
 
-// func (mock *waitGroupMock) Add(count int) {
-// 	mock.Called(count)
-// }
+func (mock *waitGroupMock) Add(count int) {
+	mock.Called(count)
+}
 
-// func (mock *waitGroupMock) Done() {
-// 	mock.Called()
-// }
+func (mock *waitGroupMock) Done() {
+	mock.Called()
+}
 
-// func (mock *waitGroupMock) Wait() {
-// 	mock.Called()
-// }
+func (mock *waitGroupMock) Wait() {
+	mock.Called()
+}

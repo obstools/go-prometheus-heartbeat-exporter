@@ -6,18 +6,10 @@ import (
 	"net"
 	"net/http"
 	"strconv"
-	"sync"
 	"time"
 
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
-
-// WaitGroup interface
-type waitGroup interface {
-	Add(int)
-	Done()
-	Wait()
-}
 
 // serverPrometheusWrapper structure. Used for testing purposes
 type serverPrometheusWrapper struct {
@@ -68,7 +60,7 @@ func newExporter(port, shutdownTimeout int, route string, logger logger) *export
 // Exporter methods
 
 // Starts exporter, runs listen channel from the parent (heartbeat server)
-func (exporter *exporter) start(parentContext context.Context, wg *sync.WaitGroup) error {
+func (exporter *exporter) start(parentContext context.Context, wg waitGroup) error {
 	exporter.ctx, exporter.wg = parentContext, wg
 	exporter.listenShutdownSignal()
 	exporter.logger.info(exporterStartMessage + exporter.server.Port() + exporter.route)
@@ -105,7 +97,7 @@ func (exporter *exporter) isPortAvailable() (err error) {
 	port := exporter.server.Port()
 	listener, err := net.Listen("tcp", port)
 	if err != nil {
-		return errors.New(exporterErrorMsg + port)
+		return errors.New(exporterErrorMessage + port)
 	}
 
 	listener.Close()

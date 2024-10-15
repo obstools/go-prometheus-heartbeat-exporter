@@ -122,7 +122,7 @@ func TestExporterIsPortAvailable(t *testing.T) {
 		listener, _ := net.Listen("tcp", port)
 		defer listener.Close()
 
-		assert.Error(t, exporter.isPortAvailable(), exporterErrorMsg+port)
+		assert.EqualError(t, exporter.isPortAvailable(), exporterErrorMessage+port)
 		prometheusServer.AssertExpectations(t)
 	})
 }
