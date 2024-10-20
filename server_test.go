@@ -51,6 +51,8 @@ func TestServerStart(t *testing.T) {
 		)
 
 		assert.NoError(t, server.Start())
+		assert.NotNil(t, server.ctx)
+		assert.NotNil(t, server.shutdown)
 		assert.True(t, server.isStarted())
 
 		_ = server.Stop()
