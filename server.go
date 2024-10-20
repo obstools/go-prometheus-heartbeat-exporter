@@ -72,7 +72,7 @@ func (server *Server) Start() (err error) {
 	go func() {
 		// We have checked port availability before, it's safe to start exporter
 		if err := server.exporter.start(server.ctx, server.wg); err != nil {
-			logger.warning(serverStartExporterErrorMessage, err.Error())
+			logger.info(exporterStatusTitle, err.Error())
 		}
 	}()
 
