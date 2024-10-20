@@ -68,6 +68,14 @@ func createNewWaitGroup() *sync.WaitGroup {
 	return new(sync.WaitGroup)
 }
 
+// Creates new minimal configuration
+func createNewMinimalConfiguration() *Configuration {
+	return &Configuration{
+		Port:         8080,
+		MetricsRoute: "/metrics",
+	}
+}
+
 // Generates a unique instance name for testing purposes
 func generateUniqueInstanceName() string {
 	return fmt.Sprintf("test_instance_%d", time.Now().UnixNano())

@@ -3,7 +3,6 @@ package heartbeat
 import (
 	"context"
 	"fmt"
-	"sync"
 	"time"
 )
 
@@ -14,7 +13,7 @@ type heartbeatInstance struct {
 	metric                  metric
 	session                 session
 	ctx                     context.Context
-	wg                      *sync.WaitGroup
+	wg                      waitGroup
 	logger                  logger
 }
 
