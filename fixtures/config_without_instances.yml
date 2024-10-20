@@ -1,0 +1,6 @@
+---
+
+log_to_stdout: true
+log_activity: true
+port: 8080
+metrics_route: '/metrics'
