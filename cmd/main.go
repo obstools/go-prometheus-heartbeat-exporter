@@ -10,6 +10,8 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+
+	_ "github.com/lib/pq"
 )
 
 var signals, logFatalf = make(chan os.Signal, 1), log.Fatalf

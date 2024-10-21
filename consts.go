@@ -4,18 +4,18 @@ import "log"
 
 const (
 	// Server
-	serverStartMessage              = "Starting heartbeat workers, prometheus exporter..."
-	serverStartErrorMessage         = "Unable to start heartbeat. Server must be inactive"
-	serverStartExporterErrorMessage = "Errors during starting prometheus exporter:"
-	serverStopMessage               = "Heartbeat workers, prometheus exporter were stopped gracefully"
-	serverStopErrorMessage          = "Unable to stop heartbeat. Server must be active"
-	serverStopExporterErrorMessage  = "Errors during stopping prometheus exporter:"
+	serverStartMessage             = "Starting heartbeat workers, prometheus exporter..."
+	serverStartErrorMessage        = "Unable to start heartbeat. Server must be inactive"
+	serverStopMessage              = "Heartbeat workers, prometheus exporter were stopped gracefully"
+	serverStopErrorMessage         = "Unable to stop heartbeat. Server must be active"
+	serverStopExporterErrorMessage = "Errors during stopping prometheus exporter:"
 
 	// Exporter
 	exporterStartMessage    = "Prometheus exporter started on "
 	exporterErrorMessage    = "Failed to start prometheus exporter on port "
 	exporterShutdownMessage = "Prometheus exporter is in the shutdown mode and won't accept new connections"
 	exporterStopMessage     = "Prometheus exporter stopped gracefully"
+	exporterStatusTitle     = "Prometheus exporter status:"
 
 	// Heartbeat
 	heartbeatWorkerMsg                   = "Heartbeat worker:"
