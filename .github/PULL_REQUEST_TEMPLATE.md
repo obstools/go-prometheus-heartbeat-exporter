@@ -43,7 +43,7 @@
 - [ ] My code follows the code style of this project
 - [ ] My change requires a change to the documentation
 - [ ] I have updated the documentation accordingly
-- [ ] I have read the [**CONTRIBUTING** document](https://github.com/bestwebua/go-prometheus-heartbeat-exporter/blob/master/CONTRIBUTING.md)
+- [ ] I have read the [**CONTRIBUTING** document](https://github.com/obstools/go-prometheus-heartbeat-exporter/blob/master/CONTRIBUTING.md)
 - [ ] I have added tests to cover my changes
 - [ ] I have run `golangci-lint run` from the root directory to see all new and existing tests pass
 - [ ] I have run `go tool cover` to avoid test coverage degradation

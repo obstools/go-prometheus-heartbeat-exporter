@@ -26,5 +26,6 @@ words:
   - bestwebua
   - codebases
   - consts
-  - unexported
+  - obstools
   - smokeping
+  - unexported

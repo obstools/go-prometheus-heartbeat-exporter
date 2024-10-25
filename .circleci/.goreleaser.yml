@@ -17,9 +17,9 @@ builds:
       - arm64
     ldflags:
       - -s -w
-      - -X github.com/bestwebua/go-prometheus-heartbeat-exporter/cmd/version.Version={{.Version}}
-      - -X github.com/bestwebua/go-prometheus-heartbeat-exporter/cmd/version.GitCommit={{.Commit}}
-      - -X github.com/bestwebua/go-prometheus-heartbeat-exporter/cmd/version.BuildTime={{.Date}}
+      - -X github.com/obstools/go-prometheus-heartbeat-exporter/cmd/version.Version={{.Version}}
+      - -X github.com/obstools/go-prometheus-heartbeat-exporter/cmd/version.GitCommit={{.Commit}}
+      - -X github.com/obstools/go-prometheus-heartbeat-exporter/cmd/version.BuildTime={{.Date}}
 
 archives:
   - id: heartbeat-archive
