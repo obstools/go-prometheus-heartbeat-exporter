@@ -1,4 +1,4 @@
-# ![Prometheus Heartbeat Exporter - lightweight configurable multithreaded smokeping written on Golang](https://repository-images.githubusercontent.com/42/42)
+# ![Prometheus Heartbeat Exporter - lightweight configurable multithreaded smokeping written on Golang](https://repository-images.githubusercontent.com/848341297/259630bf-4766-4265-86d2-6af5418f3299)
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/obstools/go-prometheus-heartbeat-exporter)](https://goreportcard.com/report/github.com/obstools/go-prometheus-heartbeat-exporter)
 [![Codecov](https://codecov.io/gh/obstools/go-prometheus-heartbeat-exporter/branch/master/graph/badge.svg)](https://codecov.io/gh/obstools/go-prometheus-heartbeat-exporter)
