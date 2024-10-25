@@ -93,7 +93,7 @@ jobs:
       - run:
           name: Publishing new release to Go Packages
           command: |
-            ./.circleci/scripts/release.sh bestwebua go-prometheus-heartbeat-exporter
+            ./.circleci/scripts/release.sh obstools go-prometheus-heartbeat-exporter
 
 workflows:
   build:

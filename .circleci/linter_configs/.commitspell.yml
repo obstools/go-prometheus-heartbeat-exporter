@@ -13,6 +13,8 @@ languageSettings:
       - GithubUser
 
 words:
+  - Trotsenko
+  - Vladislav
   - autobuilds
   - bestwebua
   - codecov
@@ -21,20 +23,20 @@ words:
   - consts
   - crtypto
   - funcs
-  - unexported
   - golangci
   - gomod
   - gotestsum
   - goreleaser
-  - lefthook
   - ldflags
+  - lefthook
   - markdownlint
+  - obstools
   - punycode
   - rubocop
   - shellcheck
   - shortcuting
   - sigquit
+  - smokeping
   - struct
   - structs
-  - smokeping
   - yamlint

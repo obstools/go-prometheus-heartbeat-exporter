@@ -12,9 +12,9 @@ assignees: bestwebua
 ### New feature request checklist
 
 - [ ] I have updated `go-prometheus-heartbeat-exporter` to the latest version
-- [ ] I have read the [Contribution Guidelines](https://github.com/bestwebua/go-prometheus-heartbeat-exporter/blob/master/CONTRIBUTING.md)
-- [ ] I have read the [documentation](https://github.com/bestwebua/go-prometheus-heartbeat-exporter/blob/master/README.md)
-- [ ] I have searched for [existing GitHub issues](https://github.com/bestwebua/go-prometheus-heartbeat-exporter/issues)
+- [ ] I have read the [Contribution Guidelines](https://github.com/obstools/go-prometheus-heartbeat-exporter/blob/master/CONTRIBUTING.md)
+- [ ] I have read the [documentation](https://github.com/obstools/go-prometheus-heartbeat-exporter/blob/master/README.md)
+- [ ] I have searched for [existing GitHub issues](https://github.com/obstools/go-prometheus-heartbeat-exporter/issues)
 
 <!-- Please use next pattern for your feature request title: [FEATURE] Your feature request title here -->
 

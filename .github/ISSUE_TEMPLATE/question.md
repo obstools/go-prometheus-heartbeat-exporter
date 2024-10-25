@@ -11,9 +11,9 @@ assignees: bestwebua
 
 ### New question checklist
 
-- [ ] I have read the [Contribution Guidelines](https://github.com/bestwebua/go-prometheus-heartbeat-exporter/blob/master/CONTRIBUTING.md)
-- [ ] I have read the [documentation](https://github.com/bestwebua/go-prometheus-heartbeat-exporter/blob/master/README.md)
-- [ ] I have searched for [existing GitHub issues](https://github.com/bestwebua/go-prometheus-heartbeat-exporter/issues)
+- [ ] I have read the [Contribution Guidelines](https://github.com/obstools/go-prometheus-heartbeat-exporter/blob/master/CONTRIBUTING.md)
+- [ ] I have read the [documentation](https://github.com/obstools/go-prometheus-heartbeat-exporter/blob/master/README.md)
+- [ ] I have searched for [existing GitHub issues](https://github.com/obstools/go-prometheus-heartbeat-exporter/issues)
 
 <!-- Please use next pattern for your question title: [QUESTION] Your question title here -->
 

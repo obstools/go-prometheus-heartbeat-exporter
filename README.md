@@ -1,14 +1,17 @@
 # ![Prometheus Heartbeat Exporter - lightweight configurable multithreaded smokeping written on Golang](https://repository-images.githubusercontent.com/42/42)
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/bestwebua/go-prometheus-heartbeat-exporter)](https://goreportcard.com/report/github.com/bestwebua/go-prometheus-heartbeat-exporter)
-[![Codecov](https://codecov.io/gh/bestwebua/go-prometheus-heartbeat-exporter/branch/master/graph/badge.svg)](https://codecov.io/gh/bestwebua/go-prometheus-heartbeat-exporter)
-[![CircleCI](https://circleci.com/gh/bestwebua/go-prometheus-heartbeat-exporter/tree/master.svg?style=svg)](https://circleci.com/gh/bestwebua/go-prometheus-heartbeat-exporter/tree/master)
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/bestwebua/go-prometheus-heartbeat-exporter)](https://github.com/bestwebua/go-prometheus-heartbeat-exporter/releases)
-[![PkgGoDev](https://pkg.go.dev/badge/github.com/bestwebua/go-prometheus-heartbeat-exporter)](https://pkg.go.dev/github.com/bestwebua/go-prometheus-heartbeat-exporter)
-[![GitHub](https://img.shields.io/github/license/bestwebua/go-prometheus-heartbeat-exporter)](LICENSE.txt)
+[![Go Report Card](https://goreportcard.com/badge/github.com/obstools/go-prometheus-heartbeat-exporter)](https://goreportcard.com/report/github.com/obstools/go-prometheus-heartbeat-exporter)
+[![Codecov](https://codecov.io/gh/obstools/go-prometheus-heartbeat-exporter/branch/master/graph/badge.svg)](https://codecov.io/gh/obstools/go-prometheus-heartbeat-exporter)
+[![CircleCI](https://circleci.com/gh/obstools/go-prometheus-heartbeat-exporter/tree/master.svg?style=svg)](https://circleci.com/gh/obstools/go-prometheus-heartbeat-exporter/tree/master)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/obstools/go-prometheus-heartbeat-exporter)](https://github.com/obstools/go-prometheus-heartbeat-exporter/releases)
+[![PkgGoDev](https://pkg.go.dev/badge/github.com/obstools/go-prometheus-heartbeat-exporter)](https://pkg.go.dev/github.com/obstools/go-prometheus-heartbeat-exporter)
+[![GitHub](https://img.shields.io/github/license/obstools/go-prometheus-heartbeat-exporter)](LICENSE.txt)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v1.4%20adopted-ff69b4.svg)](CODE_OF_CONDUCT.md)
 
-`heartbeat` is lightweight configurable multithreaded Prometheus Heartbeat Exporter.
+`heartbeat` is a lightweight configurable multithreaded Prometheus Heartbeat Exporter that helps you monitor your services with minimal overhead. Built for [Prometheus](https://prometheus.io) - the popular open-source monitoring and alerting system, it provides essential health metrics about your infrastructure.
+
+Inspired by the principles of [smokeping](https://oss.oetiker.ch/smokeping/), `heartbeat` offers robust monitoring capabilities that allow you to measure the latency and availability of your services over time. With features like fast performance, easy setup, and efficient multi-target monitoring, `heartbeat` makes it simple to track service availability and response times.
+Perfect for both small deployments and large-scale infrastructures, it seamlessly integrates into your existing Prometheus ecosystem while keeping resource usage low.
 
 ## Table of Contents
 
@@ -16,8 +19,8 @@
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
-  - [Configuring with command line arguments](#configuring-with-command-line-arguments)
-  - [Other options](#other-options)
+  - [Configuring](#configuring)
+  - [Starting server](#starting-server)
   - [Stopping server](#stopping-server)
 - [Contributing](#contributing)
 - [License](#license)
@@ -28,19 +31,25 @@
 
 ## Features
 
-- Configurable multithreaded Prometheus Heartbeat Exporter...
+- Lightweight and efficient Prometheus exporter written in Go
+- Multithreaded architecture for improved performance
+- Configurable via YAML configuration file
+- Graceful shutdown support
+- Prometheus metrics exposure
+- Comprehensive logging options
+- Easy to deploy and configure
 
 ## Requirements
 
-Golang 1.15+
+Golang 1.23+
 
 ## Installation
 
 Install `heartbeat`:
 
 ```bash
-go get github.com/bestwebua/go-prometheus-heartbeat-exporter
-go install github.com/bestwebua/go-prometheus-heartbeat-exporter
+go get github.com/obstools/go-prometheus-heartbeat-exporter
+go install github.com/obstools/go-prometheus-heartbeat-exporter
 ```
 
 Import `heartbeat` dependency into your code:
@@ -48,39 +57,72 @@ Import `heartbeat` dependency into your code:
 ```go
 package main
 
-import heartbeat "github.com/bestwebua/go-prometheus-heartbeat-exporter"
+import heartbeat "github.com/obstools/go-prometheus-heartbeat-exporter"
 ```
 
 ## Usage
 
-- [Configuring with command line arguments](#configuring-with-command-line-arguments)
-- [Other options](#other-options)
+- [Configuring](#configuring)
+- [Starting server](#starting-server)
 - [Stopping server](#stopping-server)
 
 ### Configuring
 
-You can use `heartbeat` as binary. Just download the pre-compiled binary from the [releases page](https://github.com/bestwebua/go-prometheus-heartbeat-exporter/releases) and copy them to the desired location. For start server run command with needed arguments. You can use our bash script for automation this process like in the example below:
+`heartbeat` configuration is available as YAML file. You can also use environment variable interpolation in your configuration. This allows you to set sensitive information, such as database URLs or API keys, as environment variables and reference them in your YAML configuration. For example, you can set `url: '${DB_URL}'` and ensure that the `DB_URL` environment variable is defined in your environment. Available configuration options are described below.
 
-```bash
-curl -sL https://raw.githubusercontent.com/bestwebua/go-prometheus-heartbeat-exporter/master/script/download.sh | bash
-./heartbeat -port=2525 -log
+| Configuration Key | Type     | Description | Example |
+| --- | --- | --- | --- |
+| `log_to_stdout` | optional | Enables logging to standard output. | `log_to_stdout: true` |
+| `log_activity` | optional | Enables logging of server activity. | `log_activity: true` |
+| `port` | required | Specifies Heartbeat Prometheus exporter server port number. | `port: 8080` |
+| `metrics_route` | required | Defines the route for Prometheus exporter metrics. | `metrics_route: '/metrics'` |
+| `instances` | required | List of instances to monitor. | `instances: [...]` |
+| `name` | required | Name of the instance. | `name: 'postgres_1'` |
+| `connection` | required | Type of connection to the instance. | `connection: 'postgres'` |
+| `url` | required | Connection URL for the instance. | `url: 'postgres://localhost:5432/heartbeat_test'` |
+| `interval` | required | Check interval for the instance in seconds. | `interval: 3` |
+| `timeout` | required | Check timeout for the instance in seconds. | `timeout: 2` |
+
+An example of the configuration file:
+
+```yaml
+# config.yml
+
+---
+
+log_to_stdout: true
+log_activity: true
+port: 8080
+metrics_route: '/metrics'
+instances:
+  - name: 'postgres_1'
+    connection: 'postgres'
+    url: 'postgres://localhost:5432/heartbeat_test'
+    interval: 3
+    timeout: 2 
 ```
 
-#### Configuring with command line arguments
+### Starting server
 
-`heartbeat` configuration is available as command line arguments specified in the list below:
+You can use `heartbeat` as binary. Just download the pre-compiled binary from the [releases page](https://github.com/obstools/go-prometheus-heartbeat-exporter/releases) and copy them to the desired location. For start server run command with path to the configuration file. You can use our bash script for automation this process like in the example below:
+
+```bash
+curl -sL https://raw.githubusercontent.com/obstools/go-prometheus-heartbeat-exporter/master/script/download.sh | bash
+./heartbeat -config=config.yml
+```
+
+Passing environment variables to the `heartbeat:
+
+```bash
+SOME_ENV_VAR=123 ./heartbeat -config=config.yml
+```
+
+#### Available command line arguments
 
 | Flag description | Example of usage |
 | --- | --- |
-| `-port` - server port number. If not specified it will be assigned dynamically | `-port=8080` |
-
-#### Other options
-
-Available not configuration `heartbeat` options:
-
-| Flag description | Example of usage |
-| --- | --- |
-| `-v` - Just prints current `heartbeat` binary build data (version, commit, datetime). Doesn't run the server. | `-v` |
+| `-config` - path to the configuration file | `-config=config.yml` |
+| `-v` - Prints current `heartbeat` binary build data. Doesn't run the server. | `-v` |
 
 #### Stopping server
 
@@ -88,7 +130,7 @@ Available not configuration `heartbeat` options:
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at <https://github.com/bestwebua/go-prometheus-heartbeat-exporter>. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct. Please check the [open tickets](https://github.com/bestwebua/go-prometheus-heartbeat-exporter/issues). Be sure to follow Contributor Code of Conduct below and our [Contributing Guidelines](CONTRIBUTING.md).
+Bug reports and pull requests are welcome on GitHub at <https://github.com/obstools/go-prometheus-heartbeat-exporter>. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct. Please check the [open tickets](https://github.com/obstools/go-prometheus-heartbeat-exporter/issues). Be sure to follow Contributor Code of Conduct below and our [Contributing Guidelines](CONTRIBUTING.md).
 
 ## License
 
@@ -100,8 +142,8 @@ Everyone interacting in the `heartbeat` project’s codebases, issue trackers, c
 
 ## Credits
 
-- [The Contributors](https://github.com/bestwebua/go-prometheus-heartbeat-exporter/graphs/contributors) for code and awesome suggestions
-- [The Stargazers](https://github.com/bestwebua/go-prometheus-heartbeat-exporter/stargazers) for showing their support
+- [The Contributors](https://github.com/obstools/go-prometheus-heartbeat-exporter/graphs/contributors) for code and awesome suggestions
+- [The Stargazers](https://github.com/obstools/go-prometheus-heartbeat-exporter/stargazers) for showing their support
 
 ## Versioning
 
