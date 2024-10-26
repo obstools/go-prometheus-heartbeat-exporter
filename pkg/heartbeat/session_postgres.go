@@ -17,9 +17,10 @@ func (session *sessionPostgres) run() error {
 	}
 	defer db.Close()
 
-	err = db.Ping()
-	if err != nil {
-		return err
+	if session.query != "" {
+		_, err = db.Exec(session.query)
+	} else {
+		err = db.Ping()
 	}
 
 	return err

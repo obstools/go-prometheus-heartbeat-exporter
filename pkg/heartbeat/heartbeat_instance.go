@@ -23,7 +23,7 @@ func newInstance(instanceAttrs *InstanceAttributes) *heartbeatInstance {
 		name:        instanceAttrs.Name,
 		intervalSec: instanceAttrs.IntervalSec,
 		timeoutSec:  instanceAttrs.TimeoutSec,
-		session:     newSession(instanceAttrs.Connection, instanceAttrs.URL),
+		session:     newSession(instanceAttrs.Connection, instanceAttrs.URL, instanceAttrs.Query),
 	}
 }
 

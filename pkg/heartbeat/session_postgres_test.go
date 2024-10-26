@@ -9,6 +9,7 @@ import (
 
 func TestSessionPostgresRun(t *testing.T) {
 	t.Run("returns nil if connection is established", func(t *testing.T) {
+		query := "CREATE TABLE tmp (id SERIAL PRIMARY KEY); DROP TABLE tmp"
 		if err := createPostgresDb(); err != nil {
 			t.Fatalf("Failed to create test database: %v", err)
 		}
@@ -18,11 +19,11 @@ func TestSessionPostgresRun(t *testing.T) {
 			}
 		}()
 
-		assert.Nil(t, createNewSession("postgres", composePostgresConnectionString()).run())
+		assert.Nil(t, createNewSession("postgres", composePostgresConnectionString(), query).run())
 	})
 
 	t.Run("returns error if ping fails", func(t *testing.T) {
-		assert.NotNil(t, createNewSession("postgres", "postgres://user:password@localhost:5432").run())
+		assert.NotNil(t, createNewSession("postgres", "postgres://user:password@localhost:5432", "").run())
 	})
 
 	t.Run("returns error if connection is not established", func(t *testing.T) {

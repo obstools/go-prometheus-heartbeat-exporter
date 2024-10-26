@@ -13,6 +13,7 @@ type InstanceAttributes struct {
 	Name        string `yaml:"name"`
 	Connection  string `yaml:"connection"`
 	URL         string `yaml:"url"`
+	Query       string `yaml:"query"`
 	IntervalSec int    `yaml:"interval"`
 	TimeoutSec  int    `yaml:"timeout"`
 }
