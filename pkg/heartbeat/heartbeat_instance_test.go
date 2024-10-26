@@ -13,11 +13,12 @@ import (
 func TestNewInstance(t *testing.T) {
 	name, url, intervalSec, timeoutSec := generateUniqueInstanceName(), "test_url", 1, 2
 	t.Run("when connection is postgres", func(t *testing.T) {
-		connection := "postgres"
+		connection, query := "postgres", "some_query"
 		instanceAttributes := &InstanceAttributes{
 			Connection:  connection,
 			Name:        name,
 			URL:         url,
+			Query:       query,
 			IntervalSec: intervalSec,
 			TimeoutSec:  timeoutSec,
 		}
@@ -30,6 +31,7 @@ func TestNewInstance(t *testing.T) {
 		assert.NotNil(t, instanceSession)
 		assert.Equal(t, connection, instanceSession.getConnection())
 		assert.Equal(t, url, instanceSession.getURL())
+		assert.Equal(t, query, instanceSession.getQuery())
 	})
 
 	t.Run("when connection is undefined", func(t *testing.T) {

@@ -8,5 +8,6 @@ instances:
   - name: 'postgres_1'
     connection: 'postgres'
     url: 'postgres://localhost:5432/heartbeat_test'
+    query: 'CREATE TABLE tmp (id SERIAL PRIMARY KEY); DROP TABLE tmp'
     interval: 3
     timeout: 2

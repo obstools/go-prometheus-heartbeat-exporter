@@ -19,8 +19,10 @@ Perfect for both small deployments and large-scale infrastructures, it seamlessl
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
+  - [Supported connections](#supported-connections)
   - [Configuring](#configuring)
   - [Starting server](#starting-server)
+    - [Available command line arguments](#available-command-line-arguments)
   - [Stopping server](#stopping-server)
 - [Contributing](#contributing)
 - [License](#license)
@@ -62,9 +64,23 @@ import heartbeat "github.com/obstools/go-prometheus-heartbeat-exporter"
 
 ## Usage
 
+- [Supported connections](#supported-connections)
 - [Configuring](#configuring)
 - [Starting server](#starting-server)
+  - [Available command line arguments](#available-command-line-arguments)
 - [Stopping server](#stopping-server)
+
+### Supported connections
+
+Instances in the `heartbeat` configuration allow you to monitor various types of connections. Each instance can be configured with specific attributes such as `name`, `connection`, `url`, `query`, `interval`, and `timeout`. The `connection` attribute specifies the type of connection to be monitored, such as `postgres` for PostgreSQL, etc.
+By providing a `query`, you can define specific operations to be executed on the database or other infrastructure elements, enabling you to check not only the connection status but also the performance of specific queries. This flexibility allows for comprehensive monitoring of your services and ensures that you can quickly identify and respond to issues as they arise.
+
+> [!NOTE]
+> Please make sure that your query is idempotent, as it can be executed multiple times during the `heartbeat` check.
+
+| Connection | Description | Query example |
+| --- | --- | --- |
+| `postgres` | Postgres database connection. If `query` is not provided, `heartbeat` will check if connection is established only. | `CREATE TABLE tmp (id SERIAL PRIMARY KEY); DROP TABLE tmp` |
 
 ### Configuring
 
@@ -77,9 +93,10 @@ import heartbeat "github.com/obstools/go-prometheus-heartbeat-exporter"
 | `port` | required | Specifies Heartbeat Prometheus exporter server port number. | `port: 8080` |
 | `metrics_route` | required | Defines the route for Prometheus exporter metrics. | `metrics_route: '/metrics'` |
 | `instances` | required | List of instances to monitor. | `instances: [...]` |
-| `name` | required | Name of the instance. | `name: 'postgres_1'` |
+| `name` | required | Name of the instance. Should be unique. | `name: 'postgres_1'` |
 | `connection` | required | Type of connection to the instance. | `connection: 'postgres'` |
 | `url` | required | Connection URL for the instance. | `url: 'postgres://localhost:5432/heartbeat_test'` |
+| `query` | optional | Query to execute on the instance. | `query: 'CREATE TABLE tmp (id SERIAL PRIMARY KEY); DROP TABLE tmp'` |
 | `interval` | required | Check interval for the instance in seconds. | `interval: 3` |
 | `timeout` | required | Check timeout for the instance in seconds. | `timeout: 2` |
 
@@ -98,6 +115,7 @@ instances:
   - name: 'postgres_1'
     connection: 'postgres'
     url: 'postgres://localhost:5432/heartbeat_test'
+    query: 'CREATE TABLE tmp (id SERIAL PRIMARY KEY); DROP TABLE tmp'
     interval: 3
     timeout: 2 
 ```
@@ -124,7 +142,7 @@ SOME_ENV_VAR=123 ./heartbeat -config=config.yml
 | `-config` - path to the configuration file | `-config=config.yml` |
 | `-v` - Prints current `heartbeat` binary build data. Doesn't run the server. | `-v` |
 
-#### Stopping server
+### Stopping server
 
 `heartbeat` accepts 3 shutdown signals: `SIGINT`, `SIGQUIT`, `SIGTERM`.
 
