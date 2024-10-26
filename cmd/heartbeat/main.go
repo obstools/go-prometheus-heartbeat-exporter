@@ -3,8 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"heartbeat"
-	"heartbeat/cmd/version"
 	"io"
 	"log"
 	"os"
@@ -12,6 +10,8 @@ import (
 	"syscall"
 
 	_ "github.com/lib/pq"
+	"github.com/obstools/go-prometheus-heartbeat-exporter/cmd/version"
+	"github.com/obstools/go-prometheus-heartbeat-exporter/pkg/heartbeat"
 )
 
 var signals, logFatalf = make(chan os.Signal, 1), log.Fatalf
