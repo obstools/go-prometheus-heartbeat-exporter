@@ -69,6 +69,11 @@ func (mock *sessionMock) getURL() string {
 	return args.String(0)
 }
 
+func (mock *sessionMock) getQuery() string {
+	args := mock.Called()
+	return args.String(0)
+}
+
 // prometheusCounterMock
 type prometheusCounterMock struct {
 	mock.Mock

@@ -4,6 +4,7 @@ package heartbeat
 type sessionHeartbeat struct {
 	connection string
 	url        string
+	query      string
 }
 
 // Session type
@@ -11,6 +12,7 @@ type session interface {
 	run() error
 	getConnection() string
 	getURL() string
+	getQuery() string
 }
 
 // Session methods
@@ -25,14 +27,20 @@ func (session *sessionHeartbeat) getURL() string {
 	return session.url
 }
 
+// Returns session query
+func (session *sessionHeartbeat) getQuery() string {
+	return session.query
+}
+
 // New session builder. Returns new session interface based on the connection type
-func newSession(connection, url string) session {
+func newSession(connection, url, query string) session {
 	switch connection {
 	case connectionPostgres:
 		return &sessionPostgres{
 			sessionHeartbeat: &sessionHeartbeat{
 				connection: connection,
 				url:        url,
+				query:      query,
 			},
 		}
 	}

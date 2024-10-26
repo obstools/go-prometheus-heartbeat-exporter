@@ -59,8 +59,8 @@ func composePostgresConnectionString() string {
 }
 
 // Creates new session
-func createNewSession(connection, url string) session {
-	return newSession(connection, url)
+func createNewSession(connection, url, query string) session {
+	return newSession(connection, url, query)
 }
 
 // Creates new wait group

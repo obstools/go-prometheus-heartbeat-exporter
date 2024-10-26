@@ -32,6 +32,7 @@ func TestLoadConfiguration(t *testing.T) {
 					Name:        "postgres_1",
 					Connection:  "postgres",
 					URL:         "postgres://localhost:5432/heartbeat_test",
+					Query:       "CREATE TABLE tmp (id SERIAL PRIMARY KEY); DROP TABLE tmp",
 					IntervalSec: 3,
 					TimeoutSec:  2,
 				},
