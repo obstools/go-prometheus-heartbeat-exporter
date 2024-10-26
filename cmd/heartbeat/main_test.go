@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"errors"
 	"flag"
-	"heartbeat/cmd/version"
 	"io/fs"
 	"log"
 	"net"
@@ -12,13 +11,14 @@ import (
 	"syscall"
 	"testing"
 
+	"github.com/obstools/go-prometheus-heartbeat-exporter/cmd/version"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )
 
 func TestMain(t *testing.T) {
 	t.Run("when error not happened", func(*testing.T) {
-		os.Args = []string{os.Args[0], "-config=../fixtures/config.yml"}
+		os.Args = []string{os.Args[0], "-config=../../fixtures/config.yml"}
 		signals <- syscall.SIGINT
 
 		assert.NotPanics(t, main)
@@ -48,7 +48,7 @@ func TestMain(t *testing.T) {
 }
 
 func TestRun(t *testing.T) {
-	path, config := "some-path-to-the-program", "-config=../fixtures/config_without_instances.yml"
+	path, config := "some-path-to-the-program", "-config=../../fixtures/config_without_instances.yml"
 
 	t.Run("when command line argument error", func(t *testing.T) {
 		assert.Error(t, run([]string{path, "-not_existing_flag=42"}, flag.ContinueOnError))

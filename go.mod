@@ -1,4 +1,4 @@
-module heartbeat
+module github.com/obstools/go-prometheus-heartbeat-exporter
 
 go 1.23.0
 

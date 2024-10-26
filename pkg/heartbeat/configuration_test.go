@@ -37,7 +37,7 @@ func TestLoadConfiguration(t *testing.T) {
 				},
 			},
 		}
-		actualConfiguration, err := loadConfiguration("./fixtures/config.yml")
+		actualConfiguration, err := loadConfiguration("../../fixtures/config.yml")
 
 		assert.EqualValues(t, expectedConfiguration, actualConfiguration)
 		assert.Nil(t, err)
@@ -62,14 +62,14 @@ func TestLoadConfiguration(t *testing.T) {
 				},
 			},
 		}
-		actualConfiguration, err := loadConfiguration("./fixtures/config_with_env.yml")
+		actualConfiguration, err := loadConfiguration("../../fixtures/config_with_env.yml")
 
 		assert.EqualValues(t, expectedConfiguration, actualConfiguration)
 		assert.Nil(t, err)
 	})
 
 	t.Run("when configuration file not exists", func(t *testing.T) {
-		configurationPath := "./fixtures/config_not_existing.yml"
+		configurationPath := "../../fixtures/config_not_existing.yml"
 		actualConfiguration, err := loadConfiguration(configurationPath)
 
 		assert.EqualError(t, err, "open "+configurationPath+": no such file or directory")
@@ -77,7 +77,7 @@ func TestLoadConfiguration(t *testing.T) {
 	})
 
 	t.Run("when configuration file is a broken file", func(t *testing.T) {
-		configurationPath := "./fixtures/config"
+		configurationPath := "../../fixtures/config"
 		actualConfiguration, err := loadConfiguration(configurationPath)
 
 		assert.EqualError(t, err, "yaml: invalid trailing UTF-8 octet")
@@ -85,7 +85,7 @@ func TestLoadConfiguration(t *testing.T) {
 	})
 
 	t.Run("when configuration file is not a file", func(t *testing.T) {
-		configurationPath := "./fixtures"
+		configurationPath := "../../fixtures"
 		actualConfiguration, err := loadConfiguration(configurationPath)
 
 		assert.EqualError(t, err, "read "+configurationPath+": is a directory")
@@ -93,7 +93,7 @@ func TestLoadConfiguration(t *testing.T) {
 	})
 
 	t.Run("when configuration file is broken", func(t *testing.T) {
-		configurationPath := "./fixtures/config_broken.yml"
+		configurationPath := "../../fixtures/config_broken.yml"
 		actualConfiguration, err := loadConfiguration(configurationPath)
 
 		assert.EqualError(t, err, "yaml: line 7: did not find expected key")
