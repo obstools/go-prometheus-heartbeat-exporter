@@ -22,6 +22,7 @@ Perfect for both small deployments and large-scale infrastructures, it seamlessl
   - [Supported connections](#supported-connections)
   - [Configuring](#configuring)
   - [Starting server](#starting-server)
+    - [Available command line arguments](#available-command-line-arguments)
   - [Stopping server](#stopping-server)
 - [Contributing](#contributing)
 - [License](#license)
@@ -66,6 +67,7 @@ import heartbeat "github.com/obstools/go-prometheus-heartbeat-exporter"
 - [Supported connections](#supported-connections)
 - [Configuring](#configuring)
 - [Starting server](#starting-server)
+  - [Available command line arguments](#available-command-line-arguments)
 - [Stopping server](#stopping-server)
 
 ### Supported connections
@@ -73,7 +75,8 @@ import heartbeat "github.com/obstools/go-prometheus-heartbeat-exporter"
 Instances in the `heartbeat` configuration allow you to monitor various types of connections. Each instance can be configured with specific attributes such as `name`, `connection`, `url`, `query`, `interval`, and `timeout`. The `connection` attribute specifies the type of connection to be monitored, such as `postgres` for PostgreSQL, etc.
 By providing a `query`, you can define specific operations to be executed on the database or other infrastructure elements, enabling you to check not only the connection status but also the performance of specific queries. This flexibility allows for comprehensive monitoring of your services and ensures that you can quickly identify and respond to issues as they arise.
 
-> [!NOTE] Please make sure that your query is idempotent, as it can be executed multiple times during the `heartbeat` check.
+> [!NOTE]
+> Please make sure that your query is idempotent, as it can be executed multiple times during the `heartbeat` check.
 
 | Connection | Description | Query example |
 | --- | --- | --- |
@@ -139,7 +142,7 @@ SOME_ENV_VAR=123 ./heartbeat -config=config.yml
 | `-config` - path to the configuration file | `-config=config.yml` |
 | `-v` - Prints current `heartbeat` binary build data. Doesn't run the server. | `-v` |
 
-#### Stopping server
+### Stopping server
 
 `heartbeat` accepts 3 shutdown signals: `SIGINT`, `SIGQUIT`, `SIGTERM`.
 
