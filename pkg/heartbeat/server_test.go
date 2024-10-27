@@ -73,6 +73,7 @@ func TestServerStart(t *testing.T) {
 		port := ":8080"
 		listener, _ := net.Listen("tcp", port)
 		defer listener.Close()
+		time.Sleep(100 * time.Millisecond)
 		server, logger, errMessage := newServer(createNewMinimalConfiguration()), new(loggerMock), exporterErrorMessage+port
 		server.logger = logger
 		logger.On("error", []string{errMessage}).Once()
