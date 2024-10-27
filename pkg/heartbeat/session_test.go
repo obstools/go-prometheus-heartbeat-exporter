@@ -7,8 +7,20 @@ import (
 )
 
 func TestNewSession(t *testing.T) {
-	t.Run("returns new postgres session interface", func(t *testing.T) {
-		connection, url, query := "postgres", "some_url", "some_query"
+	url, query := "some_url", "some_query"
+
+	t.Run("when connection is postgres", func(t *testing.T) {
+		connection := "postgres"
+		session := newSession(connection, url, query)
+
+		assert.NotNil(t, session)
+		assert.Equal(t, connection, session.getConnection())
+		assert.Equal(t, url, session.getURL())
+		assert.Equal(t, query, session.getQuery())
+	})
+
+	t.Run("when connection is redis", func(t *testing.T) {
+		connection := "redis"
 		session := newSession(connection, url, query)
 
 		assert.NotNil(t, session)
@@ -18,7 +30,7 @@ func TestNewSession(t *testing.T) {
 	})
 
 	t.Run("returns nil for undefined connection", func(t *testing.T) {
-		assert.Nil(t, newSession("undefined", "some_url", "some_query"))
+		assert.Nil(t, newSession("undefined", url, query))
 	})
 }
 
