@@ -19,11 +19,11 @@ func TestSessionPostgresRun(t *testing.T) {
 			}
 		}()
 
-		assert.Nil(t, createNewSession("postgres", composePostgresConnectionString(), query).run())
+		assert.Nil(t, createNewSession(connectionPostgres, composePostgresConnectionString(), query).run())
 	})
 
 	t.Run("returns error if ping fails", func(t *testing.T) {
-		assert.NotNil(t, createNewSession("postgres", "postgres://user:password@localhost:5432", "").run())
+		assert.NotNil(t, createNewSession(connectionPostgres, "postgres://user:password@localhost:5432", "").run())
 	})
 
 	t.Run("returns error if connection is not established", func(t *testing.T) {

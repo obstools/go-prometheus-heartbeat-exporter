@@ -73,23 +73,28 @@ import heartbeat "github.com/obstools/go-prometheus-heartbeat-exporter"
 ### Supported connections
 
 Instances in the `heartbeat` configuration allow you to monitor various types of connections. Each instance can be configured with specific attributes such as `name`, `connection`, `url`, `query`, `interval`, and `timeout`. The `connection` attribute specifies the type of connection to be monitored, such as `postgres` for PostgreSQL, etc.
+
 By providing a `query`, you can define specific operations to be executed on the database or other infrastructure elements, enabling you to check not only the connection status but also the performance of specific queries. This flexibility allows for comprehensive monitoring of your services and ensures that you can quickly identify and respond to issues as they arise.
 
 > [!NOTE]
-> Please make sure that your query is idempotent, as it can be executed multiple times during the `heartbeat` check.
+> Please make sure that your query is idempotent, as it can be executed multiple times during the `heartbeat` check. If `query` is not provided, `heartbeat` will check if connection is established only.
 
 | Connection | Description | Query example |
 | --- | --- | --- |
-| `postgres` | Postgres database connection. If `query` is not provided, `heartbeat` will check if connection is established only. | `CREATE TABLE tmp (id SERIAL PRIMARY KEY); DROP TABLE tmp` |
+| `postgres` | Postgres database heartbeat. | `CREATE TABLE tmp (id SERIAL PRIMARY KEY); DROP TABLE tmp` |
+| `redis` | Redis database heartbeat. Implemented only `SET`, `GET`, `DEL` commands. | `SET key1 value1; GET key1; DEL key1` |
 
 ### Configuring
 
 `heartbeat` configuration is available as YAML file. You can also use environment variable interpolation in your configuration. This allows you to set sensitive information, such as database URLs or API keys, as environment variables and reference them in your YAML configuration. For example, you can set `url: '${DB_URL}'` and ensure that the `DB_URL` environment variable is defined in your environment. Available configuration options are described below.
 
+> [!NOTE]
+> Please keep in mind that instance name should be unique. Otherwise, `heartbeat` will fail to start.
+
 | Configuration Key | Type     | Description | Example |
 | --- | --- | --- | --- |
 | `log_to_stdout` | optional | Enables logging to standard output. | `log_to_stdout: true` |
-| `log_activity` | optional | Enables logging of server activity. | `log_activity: true` |
+| `log_activity` | optional | Enables logging of heartbeat activity. | `log_activity: true` |
 | `port` | required | Specifies Heartbeat Prometheus exporter server port number. | `port: 8080` |
 | `metrics_route` | required | Defines the route for Prometheus exporter metrics. | `metrics_route: '/metrics'` |
 | `instances` | required | List of instances to monitor. | `instances: [...]` |
@@ -117,7 +122,13 @@ instances:
     url: 'postgres://localhost:5432/heartbeat_test'
     query: 'CREATE TABLE tmp (id SERIAL PRIMARY KEY); DROP TABLE tmp'
     interval: 3
-    timeout: 2 
+    timeout: 2
+  - name: 'redis_1'
+    connection: 'redis'
+    url: 'redis://localhost:6379'
+    query: 'SET key1 value1; GET key1; DEL key1'
+    interval: 3
+    timeout: 2
 ```
 
 ### Starting server

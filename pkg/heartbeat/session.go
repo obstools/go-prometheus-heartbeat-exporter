@@ -34,15 +34,15 @@ func (session *sessionHeartbeat) getQuery() string {
 
 // New session builder. Returns new session interface based on the connection type
 func newSession(connection, url, query string) session {
+	sessionHeartbeat := &sessionHeartbeat{url: url, query: query}
+
 	switch connection {
 	case connectionPostgres:
-		return &sessionPostgres{
-			sessionHeartbeat: &sessionHeartbeat{
-				connection: connection,
-				url:        url,
-				query:      query,
-			},
-		}
+		sessionHeartbeat.connection = connection
+		return &sessionPostgres{sessionHeartbeat: sessionHeartbeat}
+	case connectionRedis:
+		sessionHeartbeat.connection = connection
+		return &sessionRedis{sessionHeartbeat: sessionHeartbeat}
 	}
 
 	return nil

@@ -36,6 +36,14 @@ func TestLoadConfiguration(t *testing.T) {
 					IntervalSec: 3,
 					TimeoutSec:  2,
 				},
+				{
+					Name:        "redis_1",
+					Connection:  "redis",
+					URL:         "redis://localhost:6379",
+					Query:       "SET key1 value1; GET key1; DEL key1",
+					IntervalSec: 3,
+					TimeoutSec:  2,
+				},
 			},
 		}
 		actualConfiguration, err := loadConfiguration("../../fixtures/config.yml")
