@@ -45,6 +45,8 @@ const (
 	metricFailureLableTimeout     = "timeout"
 
 	// Session
-	connectionPostgres   = "postgres"
-	connectionWithoutSsl = "?sslmode=disable"
+	connectionPostgres      = "postgres"
+	connectionWithoutSsl    = "?sslmode=disable"
+	connectionRedis         = "redis"
+	connectionRedisProtocol = "?protocol=3"
 )

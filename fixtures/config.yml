@@ -11,3 +11,9 @@ instances:
     query: 'CREATE TABLE tmp (id SERIAL PRIMARY KEY); DROP TABLE tmp'
     interval: 3
     timeout: 2
+  - name: 'redis_1'
+    connection: 'redis'
+    url: 'redis://localhost:6379'
+    query: 'SET key1 value1; GET key1; DEL key1'
+    interval: 3
+    timeout: 2
