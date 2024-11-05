@@ -140,7 +140,7 @@ curl -sL https://raw.githubusercontent.com/obstools/go-prometheus-heartbeat-expo
 ./heartbeat -config=config.yml
 ```
 
-Passing environment variables to the `heartbeat:
+Passing environment variables to the `heartbeat`:
 
 ```bash
 SOME_ENV_VAR=123 ./heartbeat -config=config.yml
